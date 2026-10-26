@@ -44,3 +44,22 @@ print(ac)
 #bias
 bias=classifier.score(x_train,y_train)
 bias
+from sklearn.metrics import roc_auc_score, roc_curve
+
+y_pred = classifier.predict_proba(x_test)[:,1]
+
+auc_score = roc_auc_score(y_test,y_pred)
+print(auc_score)
+
+
+fpr, tpr , thresholds = roc_curve(y_test,y_pred)
+
+plt.figure(figsize=(8,6))
+plt.plot(fpr, tpr, label=f'Logistic Regression (AUC = {auc_score:.2f})')
+plt.plot([0,1], [0,1], 'k--')  # Random classifier line
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
+plt.legend(loc='lower right')
+plt.grid()
+plt.show() 
